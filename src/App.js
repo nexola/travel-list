@@ -19,6 +19,13 @@ export default function App() {
     );
   }
 
+  function handleClearList(e) {
+    e.preventDefault();
+    const confirmed = window.confirm("Deseja mesmo limpar a lista?");
+    if (!confirmed) return;
+    setItems([]);
+  }
+
   return (
     <div className="app">
       <Logo />
@@ -27,6 +34,7 @@ export default function App() {
         items={items}
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
+        onClearList={handleClearList}
       />
       <Status items={items} />
     </div>
@@ -75,7 +83,7 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items, onDeleteItem, onToggleItem }) {
+function PackingList({ items, onDeleteItem, onToggleItem, onClearList }) {
   const [sortBy, setSortBy] = useState("input");
 
   let sortedItems;
@@ -113,6 +121,7 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
           <option value="description">Ordenar por Ordem alfabética</option>
           <option value="packed">Ordenar por Status do item</option>
         </select>
+        <button onClick={onClearList}>Limpar lista</button>
       </div>
     </div>
   );
